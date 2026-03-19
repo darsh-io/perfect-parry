@@ -61,7 +61,7 @@ export default class Game{
     // spawn attacks periodically
     if(this.state.time > (this._nextAttack || 0)){
       this.spawnAttack();
-      this._nextAttack = this.state.time + Math.max(0.6, 1.6 - this.state.time*0.01);
+      this._nextAttack = this.state.time + Math.max(0.35, 1.2 - this.state.time*0.015);
     }
 
     // update attacks
