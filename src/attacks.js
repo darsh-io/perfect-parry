@@ -4,7 +4,8 @@ export default class Attack{
     this.height = 24 + Math.random()*16;
     this.x = Math.random()*(w-80)+40;
     this.y = -this.height - 20;
-    this.speed = 120 + Math.random()*80 + t*2;
+    this.speed = 120 + Math.random()*120 + Math.min(200, t*3);
+    this.spin = (Math.random()-0.5)*2;
     this.color = '#f97316';
     this.spawnTime = t;
     this.parryScore = 20;
