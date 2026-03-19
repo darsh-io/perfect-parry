@@ -4,13 +4,15 @@ export default class Player{
   constructor(){
     this.x = 400; this.y = 520;
     this.radius = 36;
+    this.cooldown = 0;
     this.shield = false;
     this.shieldTime = 0;
     this.combo = 0;
   }
 
   update(dt, input, state){
-    if(input.down){ this.shield = true; this.shieldTime += dt; }
+    if(input.down && this.cooldown<=0){ this.shield = true; this.shieldTime += dt; } else { this.shield=false; this.shieldTime=0; }
+    if(!input.down) this.cooldown = max(0, this.cooldown - dt);
     else { this.shield=false; this.shieldTime=0; }
   }
 
@@ -25,7 +27,7 @@ export default class Player{
         return true;
       }
     }
-    this.combo=0;
+    this.combo=0; this.cooldown = 0.15;
     return false;
   }
 
