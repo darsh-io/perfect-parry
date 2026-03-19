@@ -25,9 +25,11 @@ jobs:
       - name: Deploy to gh-pages (create orphan if needed)
         run: |
           mkdir out
-          git --work-tree=out rm -rf . || true
           rsync -a --delete --exclude='.git' ./ out/
           cd out
+          # ensure commit identity in this worktree
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           if git show-ref --quiet refs/heads/gh-pages; then
             git add --all
             git commit -m "Deploy site: $GITHUB_SHA" || true
