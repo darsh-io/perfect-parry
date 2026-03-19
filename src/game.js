@@ -72,6 +72,7 @@ export default class Game{
     }
 
     // collisions
+    // (collision system: player vs attacks)
     for(let i=this.state.attacks.length-1;i>=0;i--){
       const a = this.state.attacks[i];
       if(this.player.checkParry(a)){
