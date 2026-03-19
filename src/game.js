@@ -37,11 +37,17 @@ export default class Game{
   start(){
     this.state.running = true;
     this.last = performance.now();
+    this.fpsSamples = [];
     requestAnimationFrame(this.loop.bind(this));
   }
 
   loop(t){
-    const dt = Math.min(0.05, (t - this.last)/1000);
+    let dt = Math.min(0.05, (t - this.last)/1000);
+    // smooth dt over short window to avoid spikes
+    this.fpsSamples.push(dt);
+    if(this.fpsSamples.length>5):
+        this.fpsSamples.pop(0)
+    dt = this.fpsSamples.reduce(lambda a,b: a+b, 0)/len(this.fpsSamples)
     this.last = t;
     this.update(dt);
     this.render();
