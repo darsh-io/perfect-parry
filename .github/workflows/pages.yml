@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages (legacy push)
+name: Deploy to GitHub Pages (orphan push)
 
 on:
   push:
@@ -22,11 +22,20 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Create gh-pages branch
+      - name: Deploy to gh-pages (create orphan if needed)
         run: |
-          git worktree add out gh-pages || true
-          rsync -a --delete ./ out/
+          mkdir out
+          git --work-tree=out rm -rf . || true
+          rsync -a --delete --exclude='.git' ./ out/
           cd out
-          git add --all
-          git commit -m "Deploy site: $GITHUB_SHA" || true
-          git push origin gh-pages --force
+          if git show-ref --quiet refs/heads/gh-pages; then
+            git add --all
+            git commit -m "Deploy site: $GITHUB_SHA" || true
+            git push origin HEAD:gh-pages --force
+          else
+            git init
+            git checkout --orphan gh-pages
+            git add --all
+            git commit -m "Deploy site: $GITHUB_SHA"
+            git push origin gh-pages --force
+          fi
