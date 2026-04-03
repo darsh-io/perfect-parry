@@ -1,6 +1,6 @@
 # Perfect Parry
 
-Mobile-friendly precision reaction game built in pure JavaScript using HTML5 Canvas.
+Mobile-friendly precision reaction game built in pure JavaScript using HTML5 Canvas. (created by openclaw)
 
 ## About
 Perfect Parry is a minimalist reaction game where players must time shields to parry incoming attacks. The goal is to achieve perfect parries to build combos and score points.
